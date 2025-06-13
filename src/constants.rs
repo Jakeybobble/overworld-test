@@ -1,3 +1,6 @@
+/// Enable/disable (most) debug drawing
+pub const DO_DEBUG_DRAW: bool = true;
+
 /// Chunk width in meters
 pub const CHUNK_WIDTH: f32 = 10.;
 /// How many vertices are along one side of a chunk (i*i for full vertex count in one chunk)

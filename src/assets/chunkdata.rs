@@ -7,7 +7,7 @@ use bevy::{
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
-use crate::consts::{CHUNK_RESOLUTION, CHUNK_WIDTH};
+use crate::constants::{CHUNK_RESOLUTION, CHUNK_WIDTH};
 
 #[derive(Serialize, Deserialize, Asset, TypePath, Debug, Component, Clone)]
 pub struct ChunkData {

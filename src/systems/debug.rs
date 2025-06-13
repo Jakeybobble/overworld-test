@@ -1,6 +1,6 @@
 use bevy::{color::palettes::css::YELLOW, prelude::*};
 
-use crate::{assets::chunkdata::ChunkData, components::chunk::ChunkSpot, consts::CHUNK_WIDTH, systems::player::Player};
+use crate::{assets::chunkdata::ChunkData, components::chunk::ChunkSpot, constants::CHUNK_WIDTH, systems::player::Player};
 
 /// Currently: Draws info from mapdata
 pub fn draw_chunk_data(mut gizmos: Gizmos, query: Query<(&ChunkData, &ChunkSpot)>) {

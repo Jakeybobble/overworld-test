@@ -3,7 +3,7 @@ use bevy::prelude::*;
 use crate::{
     assets::chunkdata::ChunkData,
     components::chunk::{ChunkDataHandle, ChunkSpot, DoesLoadChunk},
-    consts::CHUNK_WIDTH,
+    constants::CHUNK_WIDTH,
 };
 
 /// Replaces ChunkDataHandle with ChunkData once the asset has loaded

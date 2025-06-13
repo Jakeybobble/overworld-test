@@ -5,7 +5,7 @@ use crate::{assets::chunkdata::{ChunkData, ChunkDataLoader}};
 mod assets;
 mod components;
 mod systems;
-mod consts;
+mod constants;
 
 fn main() {
     let mut app = App::new();

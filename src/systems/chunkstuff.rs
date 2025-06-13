@@ -41,11 +41,8 @@ pub fn update_chunk_spot(mut query: Query<(&mut ChunkSpot, &Transform)>) {
 }
 
 // Loads chunks around an entity with DoesLoadChunk on ChunkSpot change
-pub fn do_chunk_loading(query: Query<&ChunkSpot, (With<DoesLoadChunk>, Changed<ChunkSpot>)>) {
+pub fn do_chunk_loading(_query: Query<&ChunkSpot, (With<DoesLoadChunk>, Changed<ChunkSpot>)>) {
     // TODO: Make this account for multiple chunk loading entities
-    for _chunk_spot in query.iter() {
-        todo!();
-    }
 }
 
 /// Generate model!

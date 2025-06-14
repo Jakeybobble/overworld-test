@@ -77,10 +77,9 @@ pub fn load_chunk(
     mut commands: Commands,
 ) {
     // Make sure to design this (or related systems) so that a chunk can't be double-loaded.
-
-    let vec = *trigger.event().0;
-    let data: Handle<ChunkData> =
-        asset_server.load(format!("chunkdata/{},{}/data.ron", vec.x, vec.y));
+    let event = trigger.event();
+    let vec = event.0;
+    let data: Handle<ChunkData> = asset_server.load(&event.0.path());
     commands.spawn((
         ChunkDataHandle(data),
         ChunkSpot::new(vec.x, vec.y),

@@ -14,6 +14,9 @@ impl ChunkSpot {
     pub fn new(x: i32, y: i32) -> Self {
         Self(IVec2::new(x,y))
     }
+    pub fn path(&self) -> String {
+        format!("chunkdata/{},{}/data.ron", self.x, self.y)
+    }
 }
 
 #[derive(Component)]

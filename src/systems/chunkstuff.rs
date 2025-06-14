@@ -80,7 +80,7 @@ pub fn load_chunk(
 
     let vec = *trigger.event().0;
     let data: Handle<ChunkData> =
-        asset_server.load(format!("mapdata/{},{}/data.ron", vec.x, vec.y));
+        asset_server.load(format!("chunkdata/{},{}/data.ron", vec.x, vec.y));
     commands.spawn((
         ChunkDataHandle(data),
         ChunkSpot::new(vec.x, vec.y),

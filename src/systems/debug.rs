@@ -1,8 +1,11 @@
-use bevy::{color::palettes::css::YELLOW, prelude::*};
+use bevy::{
+    color::palettes::css::{WHITE, YELLOW},
+    prelude::*,
+};
 
 use crate::{
     assets::chunkdata::ChunkData,
-    components::chunk::ChunkSpot,
+    components::chunk::{ChunkLoader, ChunkSpot},
     constants::{CHUNK_WIDTH, DO_DEBUG_DRAW},
     systems::player::Player,
 };
@@ -46,4 +49,22 @@ pub fn draw_player(mut gizmos: Gizmos, query: Query<&Transform, With<Player>>, t
         );
     }
     // TODO: That entire "the chunk they are in" part
+}
+
+pub fn draw_chunk_loader_range(mut gizmos: Gizmos, query: Query<(&ChunkSpot, &ChunkLoader)>) {
+    for (chunk_spot, chunk_loader) in query.iter() {
+        let range = 1. + chunk_loader.range as f32 * 2.;
+        gizmos.rect(
+            Isometry3d::new(
+                Vec3::new(
+                    (chunk_spot.x as f32 + 0.5) * CHUNK_WIDTH,
+                    0.01,
+                    (chunk_spot.y as f32 + 0.5) * CHUNK_WIDTH,
+                ),
+                Quat::from_rotation_x(f32::to_radians(90.)),
+            ),
+            Vec2::splat(range * CHUNK_WIDTH),
+            WHITE,
+        );
+    }
 }

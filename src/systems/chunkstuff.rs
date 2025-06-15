@@ -1,8 +1,10 @@
+use std::collections::HashSet;
+
 use bevy::prelude::*;
 
 use crate::{
     assets::chunkdata::ChunkData,
-    components::chunk::{ChunkDataHandle, ChunkSpot, DoesLoadChunk},
+    components::chunk::{ChunkDataHandle, ChunkLoader, ChunkSpot, ExistingChunkData, WorldChunk},
     constants::CHUNK_WIDTH,
 };
 
@@ -41,8 +43,45 @@ pub fn update_chunk_spot(mut query: Query<(&mut ChunkSpot, &Transform)>) {
 }
 
 // Loads chunks around an entity with DoesLoadChunk on ChunkSpot change
-pub fn do_chunk_loading(_query: Query<&ChunkSpot, (With<DoesLoadChunk>, Changed<ChunkSpot>)>) {
-    // TODO: Make this account for multiple chunk loading entities
+pub fn do_chunk_loading(
+    query: Query<(&ChunkSpot, &ChunkLoader), Or<(Changed<ChunkSpot>, Added<ChunkLoader>)>>,
+    chunk_query: Query<&ChunkSpot, With<WorldChunk>>,
+    existing_chunk_data: Res<ExistingChunkData>,
+    mut commands: Commands,
+) {
+    // TODO: Possibly handle unloading here also
+
+    let mut to_load: HashSet<ChunkSpot> = HashSet::new();
+
+    let mut already_loaded: HashSet<&ChunkSpot> = HashSet::new();
+    for (loader_chunk_spot, chunk_loader) in query.iter() {
+        let range = chunk_loader.range as i32;
+
+        for chunk_spot in chunk_query.iter() {
+            if chunk_spot.x < loader_chunk_spot.x - range
+                || chunk_spot.x > loader_chunk_spot.x + range
+                || chunk_spot.y < loader_chunk_spot.y - range
+                || chunk_spot.y > loader_chunk_spot.y + range
+            {
+                continue;
+            }
+            already_loaded.insert(chunk_spot);
+        }
+
+        for x in (loader_chunk_spot.x - range)..=(loader_chunk_spot.x + range) {
+            for y in (loader_chunk_spot.y - range)..=(loader_chunk_spot.y + range) {
+                let spot: ChunkSpot = ChunkSpot::new(x, y);
+                if already_loaded.contains(&spot) || !existing_chunk_data.contains(&spot) {
+                    continue;
+                };
+                to_load.insert(spot);
+            }
+        }
+    }
+
+    for spot in to_load.iter() {
+        commands.trigger(LoadChunk(*spot));
+    }
 }
 
 /// Generate model!
@@ -83,6 +122,7 @@ pub fn load_chunk(
     commands.spawn((
         ChunkDataHandle(data),
         ChunkSpot::new(vec.x, vec.y),
+        WorldChunk,
         Transform::from_xyz(
             (vec.x as f32) * CHUNK_WIDTH,
             0.,

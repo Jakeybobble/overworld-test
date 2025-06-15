@@ -29,13 +29,18 @@ fn main() {
     app.add_systems(Startup, systems::startup::setup);
     {
         use systems::debug::*;
-        app.add_systems(Update, (draw_chunk_data, draw_player));
+        app.add_systems(Update, (draw_chunk_data, draw_player, draw_chunk_loader_range));
     }
 
     {
         use systems::chunkstuff::*;
+        use components::chunk::*;
+
         app.add_systems(Update, (process_chunkdata, do_chunk_loading, update_chunk_spot, on_chunk_loaded));
         app.add_observer(load_chunk);
+
+        // TODO: Loop through all chunkdata in its folder to build this...
+        app.insert_resource(ExistingChunkData(vec![ChunkSpot::new(0,0), ChunkSpot::new(0,1), ChunkSpot::new(0,2)]));
     }
 
     {

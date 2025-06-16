@@ -81,6 +81,7 @@ pub fn handle_loading_unloading(
         }
     }
 
+    // TODO: Don't unload chunks too quickly
     for (entity, chunk_spot) in chunk_query.iter() {
         if !to_keep.contains(chunk_spot) {
             commands.entity(entity).despawn();

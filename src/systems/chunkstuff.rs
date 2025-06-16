@@ -43,21 +43,23 @@ pub fn update_chunk_spot(mut query: Query<(&mut ChunkSpot, &Transform)>) {
 }
 
 // Loads chunks around an entity with DoesLoadChunk on ChunkSpot change
-pub fn do_chunk_loading(
+pub fn handle_loading_unloading(
     query: Query<(&ChunkSpot, &ChunkLoader), Or<(Changed<ChunkSpot>, Added<ChunkLoader>)>>,
-    chunk_query: Query<&ChunkSpot, With<WorldChunk>>,
+    chunk_query: Query<(Entity, &ChunkSpot), With<WorldChunk>>,
     existing_chunk_data: Res<ExistingChunkData>,
     mut commands: Commands,
 ) {
-    // TODO: Possibly handle unloading here also
+    if query.is_empty() {
+        return;
+    }
 
     let mut to_load: HashSet<ChunkSpot> = HashSet::new();
 
-    let mut already_loaded: HashSet<&ChunkSpot> = HashSet::new();
+    let mut to_keep: HashSet<&ChunkSpot> = HashSet::new();
     for (loader_chunk_spot, chunk_loader) in query.iter() {
         let range = chunk_loader.range as i32;
 
-        for chunk_spot in chunk_query.iter() {
+        for (_, chunk_spot) in chunk_query.iter() {
             if chunk_spot.x < loader_chunk_spot.x - range
                 || chunk_spot.x > loader_chunk_spot.x + range
                 || chunk_spot.y < loader_chunk_spot.y - range
@@ -65,17 +67,23 @@ pub fn do_chunk_loading(
             {
                 continue;
             }
-            already_loaded.insert(chunk_spot);
+            to_keep.insert(chunk_spot);
         }
 
         for x in (loader_chunk_spot.x - range)..=(loader_chunk_spot.x + range) {
             for y in (loader_chunk_spot.y - range)..=(loader_chunk_spot.y + range) {
                 let spot: ChunkSpot = ChunkSpot::new(x, y);
-                if already_loaded.contains(&spot) || !existing_chunk_data.contains(&spot) {
+                if to_keep.contains(&spot) || !existing_chunk_data.contains(&spot) {
                     continue;
                 };
                 to_load.insert(spot);
             }
+        }
+    }
+
+    for (entity, chunk_spot) in chunk_query.iter() {
+        if !to_keep.contains(chunk_spot) {
+            commands.entity(entity).despawn();
         }
     }
 

@@ -36,7 +36,7 @@ fn main() {
         use systems::chunkstuff::*;
         use components::chunk::*;
 
-        app.add_systems(Update, (process_chunkdata, do_chunk_loading, update_chunk_spot, on_chunk_loaded));
+        app.add_systems(Update, (process_chunkdata, handle_loading_unloading, update_chunk_spot, on_chunk_loaded));
         app.add_observer(load_chunk);
 
         // TODO: Loop through all chunkdata in its folder to build this...

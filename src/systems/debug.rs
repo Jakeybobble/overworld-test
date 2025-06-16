@@ -52,6 +52,9 @@ pub fn draw_player(mut gizmos: Gizmos, query: Query<&Transform, With<Player>>, t
 }
 
 pub fn draw_chunk_loader_range(mut gizmos: Gizmos, query: Query<(&ChunkSpot, &ChunkLoader)>) {
+    if !DO_DEBUG_DRAW {
+        return;
+    }
     for (chunk_spot, chunk_loader) in query.iter() {
         let range = 1. + chunk_loader.range as f32 * 2.;
         gizmos.rect(

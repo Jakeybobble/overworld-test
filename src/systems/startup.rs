@@ -26,6 +26,8 @@ pub fn setup(mut commands: Commands) {
         Player,
         Transform::from_xyz(CHUNK_WIDTH / 2., 0., CHUNK_WIDTH / 2.),
         pos,
-        ChunkLoader::default(),
+        ChunkLoader {
+            range: 2
+        },
     ));
 }

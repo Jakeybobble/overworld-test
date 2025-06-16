@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 use bevy_panorbit_camera::PanOrbitCameraPlugin;
+use common::yalify;
 
 use crate::{assets::chunkdata::{ChunkData, ChunkDataLoader}};
 mod assets;
@@ -8,13 +9,18 @@ mod systems;
 mod constants;
 
 fn main() {
+    println!("{}", yalify("Starting game!"));
+
     let mut app = App::new();
     app.add_plugins(DefaultPlugins.set(WindowPlugin {
         primary_window: Some(Window {
-            title: "Terrain/Overworld test".to_string(),
+            title: "🦕 Terrain/Overworld test".to_string(),
             present_mode: bevy::window::PresentMode::AutoNoVsync,
             ..default()
         }),
+        ..default()
+    }).set(AssetPlugin {
+        file_path: "../assets".to_string(),
         ..default()
     }));
 

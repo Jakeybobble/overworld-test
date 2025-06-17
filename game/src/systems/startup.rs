@@ -1,10 +1,12 @@
 use std::f32::consts::PI;
 
 use crate::{
-    components::chunk::{ChunkLoader, ChunkSpot}, constants::CHUNK_WIDTH, systems::player::Player
+    components::chunk::{ChunkLoader, ChunkSpot}, systems::player::Player
 };
 use bevy::prelude::*;
 use bevy_panorbit_camera::PanOrbitCamera;
+
+use common::constants::*;
 
 pub fn setup(mut commands: Commands) {
     commands.spawn((

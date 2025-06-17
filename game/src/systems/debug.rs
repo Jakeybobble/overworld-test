@@ -4,11 +4,14 @@ use bevy::{
 };
 
 use crate::{
-    assets::chunkdata::ChunkData,
     components::chunk::{ChunkLoader, ChunkSpot},
-    constants::{CHUNK_WIDTH, DO_DEBUG_DRAW},
+    constants::DO_DEBUG_DRAW,
     systems::player::Player,
 };
+
+use common::chunkdata::ChunkData;
+
+use common::constants::*;
 
 /// Currently: Draws info from mapdata
 pub fn draw_chunk_data(mut gizmos: Gizmos, query: Query<(&ChunkData, &ChunkSpot)>) {

@@ -2,11 +2,13 @@ use std::collections::HashSet;
 
 use bevy::prelude::*;
 
-use crate::{
-    assets::chunkdata::ChunkData,
-    components::chunk::{ChunkDataHandle, ChunkLoader, ChunkSpot, ExistingChunkData, WorldChunk},
-    constants::CHUNK_WIDTH,
+use crate::components::chunk::{
+    ChunkDataHandle, ChunkLoader, ChunkSpot, ExistingChunkData, WorldChunk,
 };
+
+use common::chunkdata::ChunkData;
+
+use common::constants::*;
 
 /// Replaces ChunkDataHandle with ChunkData once the asset has loaded
 pub fn process_chunkdata(

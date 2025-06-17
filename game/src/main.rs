@@ -1,12 +1,14 @@
 use bevy::prelude::*;
 use bevy_panorbit_camera::PanOrbitCameraPlugin;
+use common::chunkdata::loader::ChunkDataLoader;
 use common::yalify;
 
-use crate::{assets::chunkdata::{ChunkData, ChunkDataLoader}};
 mod assets;
 mod components;
 mod systems;
 mod constants;
+
+use common::chunkdata::ChunkData;
 
 fn main() {
     println!("{}", yalify("Starting game!"));

@@ -3,7 +3,6 @@ use bevy_panorbit_camera::PanOrbitCameraPlugin;
 use common::chunkdata::loader::ChunkDataLoader;
 use common::yalify;
 
-mod assets;
 mod components;
 mod systems;
 mod constants;

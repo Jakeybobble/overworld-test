@@ -1,24 +1,15 @@
 use bevy::{asset::{io::Reader, AssetLoader, LoadContext}, prelude::*};
-use thiserror::Error;
-use crate::chunkdata::ChunkData;
+
+use crate::{components::chunkdata::ChunkData, loaders::common::RonLoaderError};
 
 
 #[derive(Default)]
 pub struct ChunkDataLoader;
 
-#[non_exhaustive]
-#[derive(Debug, Error)]
-pub enum ChunkDataLoaderError {
-    #[error("Could not load asset: {0}")]
-    Io(#[from] std::io::Error),
-    #[error("Could not parse RON: {0}")]
-    RonSpannedError(#[from] ron::error::SpannedError),
-}
-
 impl AssetLoader for ChunkDataLoader {
     type Asset = ChunkData;
     type Settings = ();
-    type Error = ChunkDataLoaderError;
+    type Error = RonLoaderError;
 
     async fn load(
         &self,

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use common::chunkdata::ChunkData;
+use common::components::chunkdata::ChunkData;
 
 #[derive(Component)]
 pub struct ChunkDataHandle(pub Handle<ChunkData>);

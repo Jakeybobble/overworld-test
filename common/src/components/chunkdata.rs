@@ -2,8 +2,6 @@ use bevy::{asset::RenderAssetUsages, prelude::*, render::mesh::Indices};
 use serde::{Deserialize, Serialize};
 use crate::constants::*;
 
-pub mod loader;
-
 #[derive(Serialize, Deserialize, Asset, TypePath, Debug, Component, Clone)]
 pub struct ChunkData {
     pub heights: Vec<f32>,

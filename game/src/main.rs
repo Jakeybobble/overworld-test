@@ -1,13 +1,11 @@
 use bevy::prelude::*;
 use bevy_panorbit_camera::PanOrbitCameraPlugin;
-use common::chunkdata::loader::ChunkDataLoader;
 use common::yalify;
 
 mod components;
 mod systems;
 mod constants;
 
-use common::chunkdata::ChunkData;
 
 fn main() {
     println!("{}", yalify("Starting game!"));
@@ -28,8 +26,8 @@ fn main() {
     // Project could be structured way better, but this was convenient.
     // I should definitely try something like bevy-butler, sometime.
 
-    app.init_asset::<ChunkData>();
-    app.init_asset_loader::<ChunkDataLoader>();
+    // Initialize common types and asset loaders
+    common::init(&mut app);
 
     app.add_plugins(PanOrbitCameraPlugin);
 

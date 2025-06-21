@@ -9,9 +9,7 @@ use crate::{
     systems::player::Player,
 };
 
-use common::chunkdata::ChunkData;
-
-use common::constants::*;
+use common::{components::chunkdata::ChunkData, constants::*};
 
 /// Currently: Draws info from mapdata
 pub fn draw_chunk_data(mut gizmos: Gizmos, query: Query<(&ChunkData, &ChunkSpot)>) {

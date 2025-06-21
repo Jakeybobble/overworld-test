@@ -6,9 +6,7 @@ use crate::components::chunk::{
     ChunkDataHandle, ChunkLoader, ChunkSpot, ExistingChunkData, WorldChunk,
 };
 
-use common::chunkdata::ChunkData;
-
-use common::constants::*;
+use common::{components::chunkdata::ChunkData, constants::*};
 
 /// Replaces ChunkDataHandle with ChunkData once the asset has loaded
 pub fn process_chunkdata(
